@@ -4,6 +4,10 @@ module.exports = function(router) {
 
   var _ = require('lodash');
 
-  router.get('/', project.list);
-  router.get('/:project', project.detail);
+  router.get('/', function(req, res) {
+    return res.json(project.list());
+  });
+  router.get('/:project', function(req, res) {
+    return res.json(project.detail(req.params.project));
+  });
 };

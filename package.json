@@ -4,7 +4,7 @@
   "description": "Icon API for projects and resources",
   "scripts": {
     "start": "node index.js",
-    "test": "karma start",
+    "test": "mocha **/*.spec.js",
     "deploy": "gcloud preview app deploy app.yaml"
   },
   "repository": {
