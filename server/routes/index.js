@@ -13,7 +13,7 @@ module.exports = function(app) {
       app.use('/api/' + routeName, router);
     }
   });
-  
+
   app.use('/api', function(req, res) {
     res.json({
       type: 'definition',

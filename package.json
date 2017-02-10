@@ -23,7 +23,10 @@
     "nconf": "^0.7.1",
     "request": "*",
     "require-dir": "^0.3.0",
-    "winston": "^2.3.0"
+    "svg-font-create": "0.0.5",
+    "webfont": "^7.1.0",
+    "winston": "^2.3.0",
+    "zip-folder": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

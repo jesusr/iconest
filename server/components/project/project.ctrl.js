@@ -6,7 +6,16 @@ var dir = __dirname.replace('/server/components/project', '/storage/projects'),
   });
 
 var projectCtrl = {
-  path: function () {
+  path: function (path) {
+    if (path && !fs.existsSync(path)) {
+      return {
+        error: true,
+        code: 103,
+        description: 'No folder in path'
+      };
+    } else if (path) {
+      dir = path || dir;
+    }
     return dir;
   },
   list: function () {
@@ -15,6 +24,7 @@ var projectCtrl = {
     }));
   },
   detail: function (name) {
+    // This has to be more complete when the setCtrl has been developed
     if (!name || !projects[name]) {
       return {};
     }
@@ -45,9 +55,26 @@ var projectCtrl = {
     }
   },
   remove: function (name) {
-    if (!fs.existsSync(folder.replace(' ', '_'))) {
-      fs.rmdirSync(dir + '/' + 'name');
+    //should be more restrictive in future
+    var path;
+    if (!name) {
+      return {
+        error: true,
+        code: 104,
+        description: 'Name or path needed'
+      };
     }
+    name = '' + name;
+    path = name.indexOf('/') < 0 ? dir + '/' + name : name;
+    if (fs.existsSync(path)) {
+      fs.rmdirSync(path);
+      return true;
+    }
+    return {
+      error: true,
+      code: 105,
+      description: 'Folder not exists'
+    };
   }
 };
 module.exports = projectCtrl;
