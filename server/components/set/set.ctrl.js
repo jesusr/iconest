@@ -1,6 +1,8 @@
 var dir = __dirname.replace('/server/components/set', '/storage/projects'),
   fs = require('fs'),
   zipFolder = require('zip-folder'),
+  svgo = require('svgo'),
+  webfont = require('webfont').default,
   project = require(__dirname + '/../project/project.ctrl'),
   rdir = require('require-dir');
 
@@ -68,9 +70,6 @@ var setCtrl = {
     var base = project.path() + '/' + proj,
       orig = base + '/sets/' + set,
       dest = base + '/dist/' + proj + '.' + set + '.zip';
-      console.log(set);
-      console.log(orig);
-      console.log(dest);
     if (fs.existsSync(dest)) {
       return dest;
     } else {
@@ -78,11 +77,64 @@ var setCtrl = {
         if (err) {
           console.log('oh no!', err);
         } else {
-          console.log(dest);
           return dest;
         }
       });
     }
+  },
+  svgFont: function (proj, set, formats, callback) {
+    this.optimize(proj, set, project.detail(proj, set));
+    return webfont({
+      files: project.path() + '/' + proj + '/sets/' + set + '/*.svg',
+      fontName: proj + '.' + set,
+      formats: formats,
+      template: 'scss'
+    }).then(callback);
+  },
+  svgFontFiles: function (proj, set, result, formats) {
+    var path = project.path() + '/' + proj + '/dist';
+    // could be refactored to async, I suppose
+    for (var i = 0; i < formats.length; i++) {
+      compileFontFile(path, formats[i], proj, set, result[formats[i]]);
+    }
+    compileFontFile(path, 'scss', proj, set, result.styles);
+    if (fs.existsSync(path + '/' + proj + '.' + set + '.webfonts.zip')) {
+      return path + '/' + proj + '.' + set + '.webfonts.zip';
+    } else {
+      zipFolder(path + '/fonts', path + '/' + proj + '.' + set + '.webfonts.zip', function (err) {
+        if (err) {
+          console.log('oh no!', err);
+        } else {
+          return path + '/' + proj + '.' + set + '.webfonts.zip';
+        }
+      });
+    }
+  },
+  optimize: function (proj, set, arr) {
+    var base = project.path() + '/' + proj,
+      orig = base + '/sets/' + set,
+      dest = base + '/dist/' + proj + '.' + set + '.zip';
+    for (var i = 0; i < arr.length; i++) {
+      if (fs.existsSync(orig + '/' + arr[i])) {
+        var content = fs.readFile(orig + '/' + arr[i], 'utf8');
+        opt(orig + '/' + arr[i], content);
+      }
+    }
+    function opt(path, data) {
+      if (err) {
+        throw err;
+      }
+      svgo.optimize(data, function (result) {
+        fs.writeFileSync(path, result);
+      });
+    }
   }
 };
+function compileFontFile(path, type, proj, set, data, ext) {
+  if (fs.existsSync(path + '/fonts/' + proj + '.' + set + '.' + type)) {
+    return path + '/fonts/' + proj + '.' + set + '.' + type;
+  } else {
+    fs.writeFileSync(path + '/fonts/' + proj + '.' + set + '.' + type, data);
+  }
+}
 module.exports = setCtrl;

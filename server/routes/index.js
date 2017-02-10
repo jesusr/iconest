@@ -22,7 +22,7 @@ module.exports = function(app) {
     });
   });
   
-  app.use('/static', express.static('public'));
+  app.use('/storage', express.static('storage'));
   
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);

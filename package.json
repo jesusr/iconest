@@ -24,6 +24,7 @@
     "request": "*",
     "require-dir": "^0.3.0",
     "svg-font-create": "0.0.5",
+    "svgo": "^0.7.2",
     "webfont": "^7.1.0",
     "winston": "^2.3.0",
     "zip-folder": "^1.0.0"
