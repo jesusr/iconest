@@ -1,0 +1,26 @@
+<header></header>
+<main>
+  <div class="main-wrapper">
+    <div class="main-content set" ng-if="app.setDetail">
+      <div class="icons">
+        <div class="icon" ng-repeat="svg in app.setDetail">
+          <img ng-src="http://localhost:4443/storage/projects/{{app.active}}/sets/{{app.activeSet}}/{{svg}}" alt="">
+          <h3>{{svg}}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="card project" data-ng-repeat="a in app.projects" ng-class="app.active === a ? 'active' : ''">
+      <h2 ng-click="app.selectProject(a)">{{a}}</h2>
+      <div class="content" ng-if="app.projectData && app.active === a">
+        <ul>
+          <li ng-repeat="b in app.projectData" ng-click="app.getProjectSet(a, b)">
+            <a>{{b}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <a ng-href="{{app.url}}">:iconest</a> | <a href="https://github.com/jesusr/iconest">github</a>
+</footer>

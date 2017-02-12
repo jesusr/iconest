@@ -1,0 +1,161 @@
+/* styles in src/style directory are applied to the whole page */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #fefefe;
+  color: #3c3c3c;
+  padding: 0;
+  margin: 0;
+}
+
+header {
+  display: block;
+  background-color: #3c3c3c;
+  width: 100%;
+  height: 3em;
+}
+header h1 {
+  display: block;
+  padding: 13px 5px;
+  float: left;
+  background-color: #fff;
+  color: #3c3c3c;
+  margin: 5px; 
+  margin-left: 0; 
+  border: 10px solid #3c3c3c;
+  border-radius: 0 0 0px 0px;
+  user-select: none;
+}
+header nav {
+  float: left;
+}
+header nav ul > li {
+  display: inline-block;
+}
+
+a {
+  color: #03A9F4;
+}
+
+main {
+  width: 100%;
+  padding: 1em;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  display: block;
+      overflow: auto;
+}
+main > .main-wrapper {
+  display: block;
+  width: 100%;
+}
+
+.main-wrapper {
+  margin-top: 40px;
+}
+
+.main-wrapper .card.project {
+    transition: .5s ease-in-out all;
+    width: 250px;
+    height: 250px;
+    float: left;
+    border: 10px solid #3c3c3c;
+    margin-right: 1%;
+    display: table;
+}
+.main-wrapper .card.project h2{
+  transition: .5s ease-in-out all;
+  word-break: break-word;
+  font-size: 62px;
+  display: table-cell;
+  vertical-align: middle;
+  margin: 0;
+}
+.main-wrapper .card.active.project {
+  transition: .5s ease-in-out all;
+  width: 500px;
+}
+
+.card.active h2 {
+    transition: .5s ease-in-out all;
+    width: 50%;
+    display: block;
+}
+.card.active .content {
+    width: 100%;
+    border-left: 10px solid #fff;
+    height: 230px;
+    background-color: #3c3c3c;
+    display: block;
+}
+.card.active .content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card.active .content ul li{
+    font-size: 1.5em;
+    text-align: left;
+    padding: .5em 1em;
+    color: #fff;
+    border-bottom: 3px solid #fff;
+    cursor: pointer;
+}
+.card.active .content ul li a{
+  color: #fff;
+
+}
+.main-content.set {
+  border: 10px solid #3c3c3c;
+  width: 100%;
+  padding: 1em;
+}
+.main-content.set .icons{
+
+}
+.main-content.set .icons .icon{
+      padding-right: 1em;
+    display: inline-block;
+    position: relative;
+    max-width: 150px;
+    height: 150px;
+    overflow: hidden;
+}
+
+.main-content.set .icons .icon img{
+  width: 100%;
+  max-width: 60px;
+}
+.main-content.set .icons .icon h3{
+  font-size: .9em;
+    padding: 5px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+
+
+footer {
+  height: 62px;
+  position: relative;
+  background-color: #3c3c3c;
+  width: 100%;
+  bottom: 0;
+  display: block;
+  text-align: center;
+  font-size: 0.8em;
+  padding: 1em;
+  color: #fff;
+}
+footer a {
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #fff;
+    background-color: #03A9F4;
+    display: inline-block;
+    padding: .3em .5em;
+    border-radius: 5px;
+    line-height: 1em;
+  }

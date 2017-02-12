@@ -4,11 +4,15 @@ module.exports = function (router) {
   'use strict';
 
   var _ = require('lodash');
-
+  router.get('/path', function (req, res) {
+    return res.json(project.path());
+  });
   router.get('/', function (req, res) {
+    console.log('get /');
     return res.json(project.list());
   });
   router.get('/:project', function (req, res) {
+    console.log('get /project');
     return res.json(project.detail(req.params.project));
   });
   router.get('/:project/sets', function (req, res) {
