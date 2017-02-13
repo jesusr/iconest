@@ -35,7 +35,12 @@ class AppCtrl {
       this.setDetail = null;
     } else {
       this.$project.detail(a).then(function (data) {
-        _this.projectData = Object.keys(data.data.sets);
+        if (data.data.sets) {
+          _this.projectData = data.data;
+          _this.projectData.list = Object.keys(data.data.sets);
+        } else {
+          _this.projectData = [];
+        }
         _this.setDetail = null;
         _this.active = a;
       });
@@ -50,6 +55,12 @@ class AppCtrl {
       _this.setDetail = data.data;
       _this.activeSet = b;
     });
+  }
+  hasPack() {
+    return this.setDetail.dist.arr.indexOf(this.active + '.' + this.activeSet + '.webfonts.zip') >= 0;
+  }
+  getFormat(a) {
+    return a.split('.')[a.split('.').length - 1];
   }
 }
 

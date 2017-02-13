@@ -1,5 +1,6 @@
 var dir = __dirname.replace('/server/components/set', '/storage/projects'),
   fs = require('fs'),
+  _ = require('lodash'),
   zipFolder = require('zip-folder'),
   svgo = require('svgo'),
   webfont = require('webfont').default,
@@ -8,17 +9,30 @@ var dir = __dirname.replace('/server/components/set', '/storage/projects'),
 
 var setCtrl = {
   list: function (project) {
-    console.log(rdir(dir + '/' + project + '/sets', {
-      recurse: true
-    }));
     return Object.keys(rdir(dir + '/' + project + '/sets', {
       recurse: true
     }));
   },
   detail: function (name, set) {
     // todo errorcontrol
-    var path = project.path() + '/' + name + '/sets/' + set;
-    return fs.readdirSync(path);
+    var path = project.path() + '/' + name,
+      toRet = {
+        set: fs.readdirSync(path + '/sets/' + set),
+        dist: {
+          arr: fs.readdirSync(path + '/dist/')
+        }
+      };
+    toRet.dist.arr.splice(toRet.dist.arr.indexOf('fonts'), 1);
+    toRet.dist.arr = _.filter(toRet.dist.arr, function (o) {
+      return o.indexOf(set) >= 0;
+    });
+    if (fs.existsSync(path + '/dist/fonts')) {
+      toRet.dist.fonts = fs.readdirSync(path + '/dist/fonts');
+      toRet.dist.fonts = _.filter(toRet.dist.fonts, function (o) {
+        return o.indexOf(set) >= 0;
+      });
+    }
+    return toRet;
   },
   create: function (project) {
     var folder;

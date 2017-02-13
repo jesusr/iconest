@@ -2,8 +2,31 @@
 <main>
   <div class="main-wrapper">
     <div class="main-content set" ng-if="app.setDetail">
+      <div class="header-set">
+        <h2>{{app.active}} > {{app.activeSet}} <span class="number">{{app.setDetail.set.length}} icons</span></h2>
+        <span class="close-click" ng-click="app.setDetail = null; app.activeSet = null;">&times;</span>
+      </div>
+      <div class="downloads">
+        <h3>Webfonts</h3>
+        <p class="formats">
+          <span ng-repeat="format in app.setDetail.dist.fonts" ng-if="app.setDetail.dist.fonts">
+            <a href="http://localhost:4443/storage/projects/{{app.active}}/dist/fonts/{{format}}">{{app.getFormat(format)}}</a>
+          </span>
+          <span class="highlighted">
+            <a href="http://localhost:4443/api/project/{{app.active}}/{{app.activeSet}}/font">Pack</a>
+          </span>
+        </p>
+      </div>
+      <div class="downloads">
+        <h3>SVGFILES</h3>
+        <p class="formats">
+          <span class="highlighted">
+            <a href="http://localhost:4443/api/project/{{app.active}}/{{app.active}}/svg">Zip</a>
+          </span>
+        </p>
+      </div>
       <div class="icons">
-        <div class="icon" ng-repeat="svg in app.setDetail">
+        <div class="icon" ng-repeat="svg in app.setDetail.set">
           <img ng-src="http://localhost:4443/storage/projects/{{app.active}}/sets/{{app.activeSet}}/{{svg}}" alt="">
           <h3>{{svg}}</h3>
         </div>
@@ -11,9 +34,9 @@
     </div>
     <div class="card project" data-ng-repeat="a in app.projects" ng-class="app.active === a ? 'active' : ''">
       <h2 ng-click="app.selectProject(a)">{{a}}</h2>
-      <div class="content" ng-if="app.projectData && app.active === a">
+      <div class="content" ng-if="app.projectData.list && app.active === a">
         <ul>
-          <li ng-repeat="b in app.projectData" ng-click="app.getProjectSet(a, b)">
+          <li ng-repeat="b in app.projectData.list" ng-click="app.getProjectSet(a, b)">
             <a>{{b}}</a>
           </li>
         </ul>
